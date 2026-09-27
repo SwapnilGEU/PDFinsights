@@ -70,7 +70,7 @@ Full methodology: [benchmarks/](benchmarks/README.md) · [evaluation/](evaluatio
 Requires Python 3.11+ and [Ollama](https://ollama.com).
 
 ```bash
-git clone https://github.com/SwapnilGEU/Local_Documents_Summerizer.git
+git clone https://github.com/SwapnilGEU/PDFinsights.git
 cd Local_Documents_Summerizer
 pip install -r requirements.txt
 ollama pull llama3.2:3b
