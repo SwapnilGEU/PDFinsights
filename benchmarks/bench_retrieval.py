@@ -30,9 +30,16 @@ APP_DIR = Path(__file__).resolve().parent.parent / "app"
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
-from bench_config import CHUNKS_PATH, ENABLED_METHODS, FETCH_K, K_VALUES, RERANK_CANDIDATES, RESULTS_DIR  # noqa: E402
-from retrievers import BUILDERS  # noqa: E402
-from validate_golden import load_golden, validate  # noqa: E402
+from bench_config import (
+    CHUNKS_PATH,
+    ENABLED_METHODS,
+    FETCH_K,
+    K_VALUES,
+    RERANK_CANDIDATES,
+    RESULTS_DIR,
+)
+from retrievers import BUILDERS
+from validate_golden import load_golden, validate
 
 
 def hit_at_k(ranked, relevant, k):
@@ -224,7 +231,7 @@ def main():
             print(f"  {r['qid']} rank={r['first_relevant_rank']} want={r['relevant']} got={r['top5']}  {r['question'][:60]}")
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ts = datetime.now().astimezone().strftime("%Y%m%d_%H%M%S")
     write_csv(RESULTS_DIR / f"retrieval_summary_{ts}.csv", summaries)
     write_csv(RESULTS_DIR / f"retrieval_per_question_{ts}.csv", per_q_all)
     print(f"\nSaved results/retrieval_summary_{ts}.csv and retrieval_per_question_{ts}.csv")

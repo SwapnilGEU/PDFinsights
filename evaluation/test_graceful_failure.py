@@ -6,7 +6,7 @@ APP_DIR = Path(__file__).resolve().parent.parent / "app"
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
-from unittest.mock import patch  # noqa: E402
+from unittest.mock import patch
 
 
 class FakeResponse:
@@ -19,7 +19,7 @@ class FakeResponse:
         }
 
 
-import rag  # noqa: E402 - the MODULE (bare import, same copy rag.py itself uses)
+import rag
 
 # Force every LLM call to return something that fails RAGAnswer validation
 with patch.object(rag, "local_llm") as mock_llm:

@@ -26,7 +26,7 @@ import os
 import re
 import sys
 
-from bench_config import APP_DIR, CHUNKS_PATH, FETCH_K, RERANK_CANDIDATES, REPO_ROOT
+from bench_config import APP_DIR, CHUNKS_PATH, FETCH_K, REPO_ROOT, RERANK_CANDIDATES
 
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))

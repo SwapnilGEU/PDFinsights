@@ -24,7 +24,7 @@ import json
 import os
 import statistics
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 EVAL_DIR = Path(__file__).resolve().parent
@@ -144,8 +144,8 @@ def main():
         sys.path.insert(0, str(EVAL_DIR))
     os.chdir(REPO_ROOT)  # app/ uses relative data paths
 
-    from config import LOCAL_MODEL, OLLAMA_BASE_URL  # noqa: E402
-    from eval_set import EVAL_SET, build_eval_rows, validate_eval_set  # noqa: E402
+    from config import LOCAL_MODEL, OLLAMA_BASE_URL
+    from eval_set import EVAL_SET, build_eval_rows, validate_eval_set
 
     problems = validate_eval_set()
     if problems:
@@ -169,7 +169,7 @@ def main():
     payload = {
         "model": LOCAL_MODEL,
         "judge": args.judge,
-        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "n_questions": len(results),
         "mean_scores": summary,
         "results": results,

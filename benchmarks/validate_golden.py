@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from bench_config import CHUNKS_PATH, GOLDEN_PATH  # noqa: E402
+from bench_config import CHUNKS_PATH, GOLDEN_PATH
 
 
 def load_golden(path=GOLDEN_PATH):

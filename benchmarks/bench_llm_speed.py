@@ -26,14 +26,14 @@ import statistics
 import sys
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from bench_config import (  # noqa: E402
+from bench_config import (
     CHUNKS_PATH,
     CONTEXT_CHUNKS,
     GEN_OPTIONS,
@@ -43,7 +43,7 @@ from bench_config import (  # noqa: E402
     REPEATS,
     RESULTS_DIR,
 )
-from validate_golden import load_golden  # noqa: E402
+from validate_golden import load_golden
 
 SYSTEM_PROMPT = (
     "You are a helpful question-answering assistant for machine learning. "
@@ -226,11 +226,11 @@ def main():
     cols = ["model", "vram_gb", "ttft_ms_p50", "prefill_tps_p50", "decode_tps_p50", "total_ms_p50", "gen_tokens_p50"]
     print("\n" + "  ".join(f"{c:>18}" for c in cols))
     for s in summaries:
-        print("  ".join(f"{str(s[c]):>18}" for c in cols))
+        print("  ".join(f"{s[c]!s:>18}" for c in cols))
     print("\nNote: prompt_tokens differ per model because each tokenizer splits text differently.")
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     for fname, rows in [(f"llm_speed_summary_{ts}.csv", summaries), (f"llm_speed_runs_{ts}.csv", runs)]:
         with open(RESULTS_DIR / fname, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))

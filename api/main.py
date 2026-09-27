@@ -10,18 +10,18 @@ APP_DIR = Path(__file__).resolve().parent.parent / "app"
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
-from fastapi import FastAPI, Request  # noqa: E402
-from fastapi.responses import StreamingResponse  # noqa: E402
-from pydantic import BaseModel  # noqa: E402
+from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse
 
 # Bare imports on purpose: app/rag.py imports `metrics` and `logging_utils`
 # by bare name. Importing them here as `app.metrics` would load a SECOND
 # copy of each module, so rag.py's retrieval/LLM stats went into a
 # different MetricsCollector (and log buffer) than the one /metrics and the
 # per-request logs read -> retrieval/LLM latency always showed 0.
-from logging_utils import log_event  # noqa: E402
-from metrics import metrics  # noqa: E402
-from rag import rag_stream  # noqa: E402
+from logging_utils import log_event
+from metrics import metrics
+from pydantic import BaseModel
+from rag import rag_stream
 
 app = FastAPI(title="Advanced RAG API")
 
